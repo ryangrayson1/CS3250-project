@@ -14,7 +14,7 @@ class Graph:
         self.edges.append((u, v, w))
 
     def __str__(self):
-        s = f"{len(self.nodes)} {len(self.edges)}\n"
+        s = f"{max(self.nodes) + 1} {len(self.edges)}\n"
         for u, v, w in self.edges:
             s += f"{u} {v} {w}\n"
         return s
@@ -81,6 +81,9 @@ class SiteManager:
         self.open_graph_input()
         self.set_graph(graph_str)
         return self.dinics(s, t)
+
+    def get_dinics_error(self):
+        return self.driver.find_element(By.ID, "dinic-err").text
 
     def __del__(self):
         self.driver.close()
