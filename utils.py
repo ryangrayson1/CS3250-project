@@ -18,7 +18,7 @@ class Graph:
         return s
 
 
-WAIT = 0.6
+WAIT = 1
 
 
 # click and wait for page load
@@ -33,8 +33,7 @@ class SiteManager:
         self.driver.get(url)
 
     def close_instructions(self):
-        overlay = self.driver.find_element(By.ID, "overlay")
-        cw(overlay)
+        self.driver.execute_script("end_eLecture();")
 
     def open_graph_input(self, default=False):
         edit_graph_button = self.driver.find_element(By.ID, "draw")
