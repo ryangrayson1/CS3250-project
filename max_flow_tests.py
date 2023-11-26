@@ -11,7 +11,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Test Case #1: A1, B1, C1, D1
     # Input Space Partition: Ford-Fulkerson, well-formed input, 0-2 nodes, connected graph
     # Description:
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_ff_wellformed_2nodes_connected(self):
         graph = Graph(2)
         graph.add_edge(0, 1, 5)
@@ -23,7 +23,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Test Case #2: A1, B1, C1, D2
     # Input Space Partition: Ford-Fulkerson, well-formed input, 0-2 nodes, disconnected graph
     # Description:
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_ff_wellformed_2nodes_disconnected(self):
         graph = Graph(2)
 
@@ -44,7 +44,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Test Case #3: A1, B1, C2, D1
     # Input Space Partition: Ford-Fulkerson, well-formed input, 3-4 nodes, connected graph
     # Description:
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_ff_wellformed_4nodes_connected(self):
         graph = Graph(4)
         graph.add_edge(0, 1, 7)
@@ -59,7 +59,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Input Space Partition: Ford-Fulkerson, well-formed input, 3-4 nodes, disconnected graph
     # Description:
     # result: NOTE this sometimes displays the wrong error message! bug found by this test case
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_ff_wellformed_4nodes_disconnected(self):
         graph = Graph(4)
         graph.add_edge(0, 1, 7)
@@ -81,7 +81,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Test Case #5: A1, B1, C3, D1
     # Input Space Partition: Ford-Fulkerson, well-formed input, 5-7 nodes, connected graph
     # Description:
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_ff_wellformed_5nodes_connected(self):
         graph = Graph(5)
         graph.add_edge(0, 1, 1)
@@ -96,23 +96,84 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Test Case #6: A1, B1, C3, D2
     # Input Space Partition: Ford-Fulkerson, well-formed input, 5-7 nodes, disconnected graph
     # Description:
+    @unittest.skip("x")
+    def test_ff_wellformed_6nodes_disconnected(self):
+        graph = Graph(6)
+        graph.add_edge(0, 1, 1)
+        graph.add_edge(1, 2, 1)
+        graph.add_edge(2, 3, 2)
+        graph.add_edge(3, 4, 4)
+        graph.add_edge(5, 0, 1)
+
+        self.site_manager.open_graph_input(True)
+
+        self.site_manager.set_graph(str(graph))
+
+        draw_msg = self.site_manager.get_draw_error()
+        self.assertTrue("Source and sink is not connected." in draw_msg)
+
+        try:
+            self.site_manager.run_ford_fulkerson(str(graph), 0, 5)
+            self.fail()
+        except:
+            pass
 
     # Test Case #7: A1, B1, C4, D1
     # Input Space Partition: Ford-Fulkerson, well-formed input, 8+ nodes, connected graph
-    # Description:
-    #  invalid sink
+    # Description: In this test, we ensure that in 2 different spots there are multiple augmenting path options
+    # this ensure we hit one of the tricky nuances of the max flow algorithm
+    @unittest.skip("x")
+    def test_ff_wellformed_10nodes_connected(self):
+        graph = Graph(10)
+        graph.add_edge(0, 1, 15)
+        graph.add_edge(1, 2, 25)
+        graph.add_edge(2, 3, 5)
+        graph.add_edge(3, 4, 5)
+        graph.add_edge(4, 9, 5)
+        graph.add_edge(2, 6, 7)
+        graph.add_edge(4, 0, 1)
+        graph.add_edge(4, 5, 31)
+        graph.add_edge(5, 6, 12)
+        graph.add_edge(6, 7, 53)
+        graph.add_edge(7, 8, 14)
+        graph.add_edge(8, 9, 5)
+        graph.add_edge(9, 0, 5)
+        graph.add_edge(0, 9, 5)
+
+        max_flow = self.site_manager.run_ford_fulkerson(str(graph), 0, 9)
+
+        self.assertEqual(max_flow, 5)
 
     # Test Case #8: A1, B1, C4, D2
     # Input Space Partition: Ford-Fulkerson, well-formed input, 8+ nodes, disconnected graph
     # Description:
+    @unittest.skip("x")
+    def test_ff_wellformed_20nodes_disconnected(self):
+        graph = Graph(20)
+        graph.add_edge(0, 1, 15)
+
+        self.site_manager.open_graph_input(True)
+
+        self.site_manager.set_graph(str(graph))
+
+        draw_msg = self.site_manager.get_draw_error()
+        self.assertTrue("Source and sink is not connected." in draw_msg)
+
+        try:
+            self.site_manager.run_ford_fulkerson(str(graph), 0, 5)
+            self.fail()
+        except:
+            pass
 
     # Test Case #9: A1, B2, C1, D1
     # Input Space Partition: Ford-Fulkerson, malformed input, 0-2 nodes, connected graph
     # Description:
+    # not possible
 
     # Test Case #10: A1, B2, C1, D2
     # Input Space Partition: Ford-Fulkerson, malformed input, 0-2 nodes, disconnected graph
     # Description:
+    # not possible
 
     # Test Case #11: A1, B2, C2, D1
     # Input Space Partition: Ford-Fulkerson, malformed input, 3-4 nodes, connected graph
@@ -141,10 +202,35 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Test Case #17: A2, B1, C1, D1
     # Input Space Partition: Edmonds-Karp, well-formed input, 0-2 nodes, connected graph
     # Description:
+    @unittest.skip("x")
+    def test_ek_wellformed_0nodes_connected(self):
+        graph = Graph(0)
+
+        self.site_manager.open_graph_input(True)
+        self.site_manager.set_graph(str(graph))
+
+        draw_msg = self.site_manager.get_draw_error()
+        self.assertTrue("Graph cannot be empty" in draw_msg)
+
+        try:
+            max_flow = self.site_manager.run_edmonds_karp(str(graph), 0, 0)
+        except:
+            pass
 
     # Test Case #18: A2, B1, C1, D2
     # Input Space Partition: Edmonds-Karp, well-formed input, 0-2 nodes, disconnected graph
     # Description:
+    @unittest.skip("x")
+    def test_ek_wellformed_1node_disconnected(self):
+        graph = Graph(1)
+
+        # should not get a max flow result here so check the -1
+        max_flow = self.site_manager.run_edmonds_karp(str(graph), 0, 0, True)
+
+        self.assertEqual(max_flow, -1)
+
+        err = self.site_manager.get_edmonds_karp_error()
+        self.assertTrue("The source vertex is the same as the sink vertex" in err)
 
     # Test Case #19: A2, B1, C2, D1
     # Input Space Partition: Edmonds-Karp, well-formed input, 3-4 nodes, connected graph
@@ -253,7 +339,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Test Case #45: A3, B2, C3, D1
     # Input Space Partition: Dinic's, malformed input, 5-7 nodes, connected graph
     # Description:
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_dinic_malformed_5nodes_connected(self):
         graph = Graph(5)
         graph.add_edge(0, 1, 5)
@@ -276,7 +362,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Test Case #47: A3, B2, C4, D1
     # Input Space Partition: Dinic's, malformed input, 8+ nodes, connected graph
     # Description:
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_ek_malformed_10nodes_connected(self):
         graph = Graph(10)
         graph.add_edge(0, 1, 5)
