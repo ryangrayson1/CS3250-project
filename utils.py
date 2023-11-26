@@ -65,6 +65,10 @@ class SiteManager:
             done_button = self.driver.find_element(By.CLASS_NAME, "done-button")
             cw(done_button)
 
+    def get_input_error(self):
+        err = self.driver.find_element(By.ID, "error_messages_graph_input")
+        return err.find_element(By.TAG_NAME, "p").text
+
     def get_draw_error(self):
         editor = self.driver.find_element(By.ID, "main")
         err = editor.find_element(By.ID, "draw-err")
@@ -152,8 +156,8 @@ class SiteManager:
                 return int(max_flow)
         return -1
 
-    def run_dinics(self, graph_str, s, t):
-        self.open_graph_input()
+    def run_dinics(self, graph_str, s, t, default_graph=False):
+        self.open_graph_input(default_graph)
         self.set_graph(graph_str)
         return self.dinics(s, t)
 
