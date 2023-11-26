@@ -84,8 +84,13 @@ class SiteManager:
         finish = self.driver.find_element(By.ID, "go-to-end")
         cw(finish)
         result = self.driver.find_element(By.ID, "status").text
-        max_flow = result.split(".")[0][-1]
-        return int(max_flow)
+        res_parts = result.split(".")
+        if len(res_parts) >= 1:
+            res_parts = res_parts[0].split("is ")
+            if len(res_parts) >= 1:
+                max_flow = res_parts[-1]
+                return int(max_flow)
+        return -1
 
     def run_ford_fulkerson(self, graph_str, s, t):
         self.open_graph_input()
@@ -110,9 +115,11 @@ class SiteManager:
         cw(finish)
         result = self.driver.find_element(By.ID, "status").text
         res_parts = result.split(".")
-        if len(res_parts) >= 1 and len(res_parts[0]) >= 1:
-            max_flow = res_parts[0][-1]
-            return int(max_flow)
+        if len(res_parts) >= 1:
+            res_parts = res_parts[0].split("is ")
+            if len(res_parts) >= 1:
+                max_flow = res_parts[-1]
+                return int(max_flow)
         return -1
 
     def run_edmonds_karp(self, graph_str, s, t, default_graph=False):
@@ -137,8 +144,13 @@ class SiteManager:
         finish = self.driver.find_element(By.ID, "go-to-end")
         cw(finish)
         result = self.driver.find_element(By.ID, "status").text
-        max_flow = result.split(".")[0][-1]
-        return int(max_flow)
+        res_parts = result.split(".")
+        if len(res_parts) >= 1:
+            res_parts = res_parts[0].split("is ")
+            if len(res_parts) >= 1:
+                max_flow = res_parts[-1]
+                return int(max_flow)
+        return -1
 
     def run_dinics(self, graph_str, s, t):
         self.open_graph_input()
