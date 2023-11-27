@@ -10,7 +10,8 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #1: A1, B1, C1, D1
     # Input Space Partition: Ford-Fulkerson, well-formed input, 0-2 nodes, connected graph
-    # Description:
+    # Description: Simple graph with two nodes and valid input to test functionality
+    # Expected Output: true (max_flow == 5)
     # Author: Ryan
     @unittest.skip("x")
     def test_ff_wellformed_2nodes_connected(self):
@@ -23,7 +24,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #2: A1, B1, C1, D2
     # Input Space Partition: Ford-Fulkerson, well-formed input, 0-2 nodes, disconnected graph
-    # Description:
+    # Description: Two node graph (FF, valid input) that is disconnected
     # Author: Ryan
     @unittest.skip("x")
     def test_ff_wellformed_2nodes_disconnected(self):
@@ -45,7 +46,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #3: A1, B1, C2, D1
     # Input Space Partition: Ford-Fulkerson, well-formed input, 3-4 nodes, connected graph
-    # Description:
+    # Description: 4 node graph (FF, valid input) that is connected
     # Author: Ryan
     @unittest.skip("x")
     def test_ff_wellformed_4nodes_connected(self):
@@ -60,7 +61,8 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #4: A1, B1, C2, D2
     # Input Space Partition: Ford-Fulkerson, well-formed input, 3-4 nodes, disconnected graph
-    # Description:
+    # Description: 4 node graph (FF, valid input) that is disconnected. Checks that the algorithm
+    # can handle cases where there is no path between source and sink
     # Author: Ryan
     @unittest.skip("x")
     def test_ff_wellformed_4nodes_disconnected(self):
@@ -83,7 +85,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #5: A1, B1, C3, D1
     # Input Space Partition: Ford-Fulkerson, well-formed input, 5-7 nodes, connected graph
-    # Description:
+    # Description: 5 node graph (FF, valid input) that is connected. Checks FF with more nodes.
     # Author: Ryan
     @unittest.skip("x")
     def test_ff_wellformed_5nodes_connected(self):
@@ -99,7 +101,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #6: A1, B1, C3, D2
     # Input Space Partition: Ford-Fulkerson, well-formed input, 5-7 nodes, disconnected graph
-    # Description:
+    # Description: 6 nodes, FF, valid input, disconnected graph in the 5-7 node range.
     # Author: Ryan
     @unittest.skip("x")
     def test_ff_wellformed_6nodes_disconnected(self):
@@ -152,7 +154,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #8: A1, B1, C4, D2
     # Input Space Partition: Ford-Fulkerson, well-formed input, 8+ nodes, disconnected graph
-    # Description:
+    # Description: Tests a disconnected graph with Ford Fulkerson on a larger scale
     # Author: Ryan
     @unittest.skip("x")
     def test_ff_wellformed_20nodes_disconnected(self):
@@ -174,7 +176,8 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #9: A1, B2, C1, D1
     # Input Space Partition: Ford-Fulkerson, malformed input, 0-2 nodes, connected graph
-    # Description: Test an invalid edge being put in the graph input
+    # Description: Test an invalid edge being put in the graph input by connecting it to
+    # a node that does not exist
     # Author: Ryan
     @unittest.skip("x")
     def test_ff_malformed_2nodes_connected(self):
@@ -241,7 +244,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #12: A1, B2, C2, D2
     # Input Space Partition: Ford-Fulkerson, malformed input, 3-4 nodes, disconnected graph
-    # Description: test an invalid string input on a disconnected graph with 4 nodes
+    # Description: test an invalid string input on a disconnected graph with 4 nodes attempting FF algorithm
     # Author: Mike
     @unittest.skip("x")
     def test_ff_malformed_4nodes_disconnected(self):
@@ -262,13 +265,13 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #13: A1, B2, C3, D1
     # Input Space Partition: Ford-Fulkerson, malformed input, 5-7 nodes, connected graph
-    # Description: Malformed input with 6 nodes and a disconneted graph
+    # Description: Malformed input with 6 nodes and connected graph. Symbols present on line 3.
     # Author: Mike
     @unittest.skip("x")
     def test_ff_malformed_6nodes_connected(self):
         graph = Graph(6)
         graph.add_edge(0, 1, 1)
-        graph.add_edge(1, 2, "Invalid")
+        graph.add_edge(1, 2, "*&*#$@")
         graph.add_edge(2, 3, 3)
         graph.add_edge(3, 4, 4)
         graph.add_edge(4, 5, 6)
@@ -286,13 +289,13 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #14: A1, B2, C3, D2
     # Input Space Partition: Ford-Fulkerson, malformed input, 5-7 nodes, disconnected graph
-    # Description:
+    # Description: 7 node graph disconnected. Checking FF, (harmless)  SQL code written on line 3.
     # Author: Mike
     @unittest.skip("x")
     def test_ff_malformed_7nodes_disconnected(self):
         graph = Graph(7)
         graph.add_edge(0, 1, 1)
-        graph.add_edge(1, 2, "invalid lol")
+        graph.add_edge(1, 2, "SELECT * FROM users")
         graph.add_edge(2, 3, 3)
         graph.add_edge(4, 5, 4)
         graph.add_edge(5, 6, 6)
@@ -311,7 +314,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #15: A1, B2, C4, D1
     # Input Space Partition: Ford-Fulkerson, malformed input, 8+ nodes, connected graph
-    # Description:
+    # Description: 8 node graph running ford-fulkerson algorithm with an invalid input
     # Author: Mike
     @unittest.skip("x")
     def test_ff_malformed_8nodes_connected(self):
@@ -320,7 +323,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
         graph.add_edge(1, 2, 5)
         graph.add_edge(2, 3, 5)
         graph.add_edge(3, 4, 5)
-        graph.add_edge("invalid", 5, 5)
+        graph.add_edge("^&*", 5, 5)
         graph.add_edge(5, 6, 5)
         graph.add_edge(6, 7, 5)
         
@@ -337,7 +340,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #16: A1, B2, C4, D2
     # Input Space Partition: Ford-Fulkerson, malformed input, 8+ nodes, disconnected graph
-    # Description:
+    # Description: 8 node graph running Ford-Fulkerson with a poorly formed input. The graph is disconnected.
     # Author: Mike
     @unittest.skip("x")
     def test_ff_malformed_8nodes_disconnected(self):
@@ -363,7 +366,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #17: A2, B1, C1, D1
     # Input Space Partition: Edmonds-Karp, well-formed input, 0-2 nodes, connected graph
-    # Description: Test an empty graph
+    # Description: Simple, valid-input. Tests what that the algorithm runs correctly with 0 nodes and edges.
     # Author: Ryan
     @unittest.skip("x")
     def test_ek_wellformed_0nodes_connected(self):
@@ -382,7 +385,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #18: A2, B1, C1, D2
     # Input Space Partition: Edmonds-Karp, well-formed input, 0-2 nodes, disconnected graph
-    # Description:
+    # Description: 1 node graph that is disconnected (no edges) running Edmonds-Karp with valid input.
     # Author: Ryan
     @unittest.skip("x")
     def test_ek_wellformed_1node_disconnected(self):
@@ -461,7 +464,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #22: A2, B1, C3, D2
     # Input Space Partition: Edmonds-Karp, well-formed input, 5-7 nodes, disconnected graph
-    # Description:
+    # Description: 5 node graph running Edmonds-karp with a well formed input, disconnected.
     # Author: Mike
     @unittest.skip("x")
     def test_ek_wellformed_5nodes_disconnected(self):
@@ -486,7 +489,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #23: A2, B1, C4, D1
     # Input Space Partition: Edmonds-Karp, well-formed input, 8+ nodes, connected graph
-    # Description:
+    # Description: This is meant to test Edmonds Karp on a larger scale; 8+ nodes, connected, with a valid input.
     # Author: Mike
     @unittest.skip("x")
     def test_ek_wellformed_8nodes_connected(self):
@@ -512,7 +515,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #24: A2, B1, C4, D2
     # Input Space Partition: Edmonds-Karp, well-formed input, 8+ nodes, disconnected graph
-    # Description:
+    # Description: This also tests Edmonds Karp on a larger scale; however, the graph is disconnected.
     # Author: Mike
     @unittest.skip("x")
     def test_ek_wellformed_10nodes_connected(self):
@@ -540,7 +543,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #25: A2, B2, C1, D1
     # Input Space Partition: Edmonds-Karp, malformed input, 0-2 nodes, connected graph
-    # Description:
+    # Description: Simple graph running Edmonds Karp with invalid input
     # Author: Mike
     @unittest.skip("x")
     def test_ek_malformed_2nodes_connected(self):
@@ -562,7 +565,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #26: A2, B2, C1, D2
     # Input Space Partition: Edmonds-Karp, malformed input, 0-2 nodes, disconnected graph
-    # Description:
+    # Description: Assesses Edmonds-Karp performance with 4 node graph, invalid input, disconnected.
     # Author: Mike
     @unittest.skip("x")
     def test_ek_malformed_2nodes_disconnected(self):
@@ -585,7 +588,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #27: A2, B2, C2, D1
     # Input Space Partition: Edmonds-Karp, malformed input, 3-4 nodes, connected graph
-    # Description:
+    # Description: Tests Edmonds-Karp with invalid input on 4 node graph, connected.
     # Author: Mike
     @unittest.skip("x")
     def test_ek_malformed_4nodes_connected(self):
@@ -607,7 +610,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #28: A2, B2, C2, D2
     # Input Space Partition: Edmonds-Karp, malformed input, 3-4 nodes, disconnected graph
-    # Description:
+    # Description: Edmonds-Karp with disconnected graph, 4 nodes, disconnected, with invalid input.
     # Author: Mike
     @unittest.skip("x")
     def test_ek_malformed_4nodes_disconnected(self):
@@ -628,7 +631,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #29: A2, B2, C3, D1
     # Input Space Partition: Edmonds-Karp, malformed input, 5-7 nodes, connected graph
-    # Description:
+    # Description: Moderately complex scenario with 6 connected nodes, Edmonds-Karp, and incorrect input format
     # Author: Mike
     @unittest.skip("x")
     def test_ek_malformed_6nodes_connected(self):
@@ -652,13 +655,13 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #30: A2, B2, C3, D2
     # Input Space Partition: Edmonds-Karp, malformed input, 5-7 nodes, disconnected graph
-    # Description:
+    # Description: 7 nodes, EK, testing with invalid input (whitespace)
     # Author: Mike
-    @unittest.skip("x")
+    # @unittest.skip("x")
     def test_ek_malformed_7nodes_disconnected(self):
         graph = Graph(7)
         graph.add_edge(0, 1, 1)
-        graph.add_edge(1, 2, "invalid lol")
+        graph.add_edge(1, 2, "        ")
         graph.add_edge(2, 3, 3)
         graph.add_edge(4, 5, 4)
         graph.add_edge(5, 6, 6)
@@ -701,7 +704,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #32: A2, B2, C4, D2
     # Input Space Partition: Edmonds-Karp, malformed input, 8+ nodes, disconnected graph
-    # Description:
+    # Description: Tests Edmonds-Karp in a relatively complex scenario with a disconnected, 8-node graph.
     # Author: Mike
     @unittest.skip("x")
     def test_ek_malformed_8nodes_disconnected(self):
@@ -726,21 +729,20 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #33: A3, B1, C1, D1
     # Input Space Partition: Dinic's, well-formed input, 0-2 nodes, connected graph
-    # Description:
+    # Description: Simple test case to check basic functionality of dinic's
     # Author: Ryan
     @unittest.skip("x")
-    def test_dinic_wellformed_2nodes_connected(self):
+    def test_dinic_wellformed_1nodes_connected(self):
         graph = Graph(2)
-        graph.add_edge(0, 1, 1)
-        graph.add_edge(1, 0, 1)
+        graph.add_edge(0, 1, 5)
 
         max_flow = self.site_manager.run_dinics(str(graph), 0, 1, True)
 
-        self.assertEqual(max_flow, 1)
+        self.assertEqual(max_flow, 5)
 
     # Test Case #34: A3, B1, C1, D2
     # Input Space Partition: Dinic’s, well-formed input, 0-2 nodes, disconnected graph
-    # Description:
+    # Description: Checks basic situation of a disconnected graph with 2 nodes and correct formatting
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_wellformed_2node_disconnected(self):
@@ -761,7 +763,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #35: A3, B1, C2, D1
     # Input Space Partition: Dinic's, well-formed input, 3-4 nodes, connected graph
-    # Description:
+    # Description: Tests moderate functionality of dinic's with 4 node connected graph.
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_wellformed_4nodes_connected(self):
@@ -777,7 +779,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #36: A3, B1, C2, D2
     # Input Space Partition: Dinic's, well-formed input, 3-4 nodes, disconnected graph
-    # Description:
+    # Description: Tests dinic's abilities on 4 node disconnected graph
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_wellformed_4nodes_disconnected(self):
@@ -798,7 +800,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #37: A3, B1, C3, D1
     # Input Space Partition: Dinic’s, well-formed input, 5-7 nodes, connected graph
-    # Description:
+    # Decription: Dinic's on a moderately complex scenario with 5 connected nodes and proper input
     # Author: Ryan
     @unittest.skip("x")
     def test_dinic_wellformed_5nodes_connected(self):
@@ -817,7 +819,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #38: A3, B1, C3, D2
     # Input Space Partition: Dinic's, well-formed input, 5-7 nodes, disconnected graph
-    # Description:
+    # Description: Challenges Dinic's in a partially disconnected 5 node graph with well formatted input
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_wellformed_5nodes_disconnected(self):
@@ -840,7 +842,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #39: A3, B1, C4, D1
     # Input Space Partition: Dinic's, well-formed input, 8+ nodes, connected graph
-    # Description:
+    # Description: Complex, comprehensive test of Dinic's on 8 node connected graph with correct input formatting
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_wellformed_8nodes_connected(self):
@@ -865,7 +867,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #40: A3, B1, C4, D2
     # Input Space Partition: Dinic’s, well-formed input, 8+ nodes, disconnected graph
-    # Description:
+    # Description: Evaluates Dinic's on larger 10 node disconnected graph
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_wellformed_10nodes_connected(self):
@@ -893,7 +895,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #41: A3, B2, C1, D1
     # Input Space Partition: Dinic's, malformed input, 0-2 nodes, connected graph
-    # Description:
+    # Description: Checks a basic scenario with Dinic's and incorrect formatting of input
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_malformed_2nodes_connected(self):
@@ -915,7 +917,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #42: A3, B2, C1, D2
     # Input Space Partition: Dinic's, malformed input, 0-2 nodes, disconnected graph
-    # Description:
+    # Description: Checks a combination of Dinic's, incorrect input, and disconnected graph.
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_malformed_2nodes_disconnected(self):
@@ -938,7 +940,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #43: A3, B2, C2, D1
     # Input Space Partition: Dinic’s, malformed input, 3-4 nodes, connected graph
-    # Description:
+    # Description: Evaulates dinic's with malformed input, 4 nodes, and a connected graph
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_malformed_4nodes_connected(self):
@@ -960,7 +962,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #44: A3, B2, C2, D2
     # Input Space Partition: Dinic's, malformed input, 3-4 nodes, disconnected graph
-    # Description:
+    # Description: Evaluates Dinic's on malformed input and 4 disconnected nodes.
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_malformed_4nodes_disconnected(self):
@@ -1001,7 +1003,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #46: A3, B2, C3, D2
     # Input Space Partition: Dinic’s, malformed input, 5-7 nodes, disconnected graph
-    # Description:
+    # Description: Tests Dinic's on disconnected set of 7 nodes with malformed input.
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_malformed_7nodes_disconnected(self):
@@ -1026,7 +1028,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #47: A3, B2, C4, D1
     # Input Space Partition: Dinic's, malformed input, 8+ nodes, connected graph
-    # Description:
+    # Description: Tests Dinic's with the malformed input on a set of 10 nodes
     # Author: Ryan
     @unittest.skip("x")
     def test_dinic_malformed_10nodes_connected(self):
@@ -1055,7 +1057,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
 
     # Test Case #48: A3, B2, C4, D2
     # Input Space Partition: Dinic's, malformed input, 8+ nodes, disconnected graph
-    # Description:
+    # Description: Tests Dinic's with malformed input and disconnected graph with 8 nodes.
     # Author: Mike
     @unittest.skip("x")
     def test_dinic_malformed_8nodes_disconnected(self):
