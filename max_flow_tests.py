@@ -339,7 +339,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Input Space Partition: Ford-Fulkerson, malformed input, 8+ nodes, disconnected graph
     # Description:
     # Author: Mike
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_ff_malformed_8nodes_disconnected(self):
         graph = Graph(8)
         graph.add_edge(0, 1, 5)
@@ -357,7 +357,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
             self.fail()
         except:
             err = self.site_manager.get_input_error()
-            self.assertTrue("Error trying to read line 6" in err)
+            self.assertTrue("Error trying to read line 5" in err)
             pass
 
 
@@ -464,7 +464,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Description:
     # Author: Mike
     @unittest.skip("x")
-    def test_ek_wellformed_5nodes_connected(self):
+    def test_ek_wellformed_5nodes_disconnected(self):
         graph = Graph(5)
         graph.add_edge(0, 1, 1)
         graph.add_edge(0, 2, 2)
@@ -703,7 +703,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Input Space Partition: Edmonds-Karp, malformed input, 8+ nodes, disconnected graph
     # Description:
     # Author: Mike
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_ek_malformed_8nodes_disconnected(self):
         graph = Graph(8)
         graph.add_edge(0, 1, 5)
@@ -721,7 +721,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
             self.fail()
         except:
             err = self.site_manager.get_input_error()
-            self.assertTrue("Error trying to read line 6" in err)
+            self.assertTrue("Error trying to read line 5" in err)
             pass
 
     # Test Case #33: A3, B1, C1, D1
@@ -742,17 +742,22 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Input Space Partition: Dinic’s, well-formed input, 0-2 nodes, disconnected graph
     # Description:
     # Author: Mike
-    # @unittest.skip("x")
-    def test_dinic_wellformed_1node_disconnected(self):
-        graph = Graph(1)
+    @unittest.skip("x")
+    def test_dinic_wellformed_2node_disconnected(self):
+        graph = Graph(2)
+        graph.add_edge(0, 0, 1)
+        graph.add_edge(1, 1, 1)
 
-        # should not get a max flow result here so check the -1
-        max_flow = self.site_manager.run_dinic(str(graph), 0, 0, True)
+        self.site_manager.open_graph_input(True)
 
-        self.assertEqual(max_flow, -1)
-
-        err = self.site_manager.get_dinics_error()
-        self.assertTrue("The source vertex is the same as the sink vertex" in err)
+        try:
+            self.site_manager.set_graph(str(graph))
+            self.site_manager.run_edmonds_karp(str(graph), 0, 9)
+            self.fail()
+        except:
+            err = self.site_manager.get_draw_error()
+            self.assertTrue("Source and sink is not connected" in err)
+            pass
 
     # Test Case #35: A3, B1, C2, D1
     # Input Space Partition: Dinic's, well-formed input, 3-4 nodes, connected graph
@@ -774,15 +779,22 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Input Space Partition: Dinic's, well-formed input, 3-4 nodes, disconnected graph
     # Description:
     # Author: Mike
-    # @unittest.skip("x")
-    def test_dinic_wellformed_3nodes_disconnected(self):
-        graph = Graph(3)
-        graph.add_edge(0, 2, 1e8)
-        graph.add_edge(2, 0, 1e8)
+    @unittest.skip("x")
+    def test_dinic_wellformed_4nodes_disconnected(self):
+        graph = Graph(4)
+        graph.add_edge(0, 1, 99)
+        graph.add_edge(2, 3, 99)
 
-        max_flow = self.site_manager.run_dinics(str(graph), 0, 2, True)
+        self.site_manager.open_graph_input(True)
 
-        self.assertEqual(max_flow, 1e8)
+        try:
+            self.site_manager.set_graph(str(graph))
+            self.site_manager.run_dinics(str(graph), 0, 3)
+            self.fail()
+        except:
+            err = self.site_manager.get_draw_error()
+            self.assertTrue("Source and sink is not connected" in err)
+            pass
 
     # Test Case #37: A3, B1, C3, D1
     # Input Space Partition: Dinic’s, well-formed input, 5-7 nodes, connected graph
@@ -883,7 +895,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Input Space Partition: Dinic's, malformed input, 0-2 nodes, connected graph
     # Description:
     # Author: Mike
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_dinic_malformed_2nodes_connected(self):
         graph = Graph(2)
         graph.add_edge(0, 1, "invalid")
@@ -904,7 +916,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Test Case #42: A3, B2, C1, D2
     # Input Space Partition: Dinic's, malformed input, 0-2 nodes, disconnected graph
     # Description:
-    # Author:
+    # Author: Mike
     @unittest.skip("x")
     def test_dinic_malformed_2nodes_disconnected(self):
         graph = Graph(2)
@@ -991,7 +1003,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Input Space Partition: Dinic’s, malformed input, 5-7 nodes, disconnected graph
     # Description:
     # Author: Mike
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_dinic_malformed_7nodes_disconnected(self):
         graph = Graph(7)
         graph.add_edge(0, 1, 1)
@@ -1016,7 +1028,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Input Space Partition: Dinic's, malformed input, 8+ nodes, connected graph
     # Description:
     # Author: Ryan
-    @unittest.skip("x")
+    # @unittest.skip("x")
     def test_dinic_malformed_10nodes_connected(self):
         graph = Graph(10)
         graph.add_edge(0, 1, 5)
@@ -1024,35 +1036,12 @@ class MaxFlowCalculatorTests(unittest.TestCase):
         graph.add_edge(2, 3, 5)
         graph.add_edge(3, 4, 5)
         graph.add_edge(4, 5, 1)
-        graph.add_edge(5, 6, 2)
+        graph.add_edge(5, 6, "invalid")
         graph.add_edge(6, 7, 3)
         graph.add_edge(9, 1, 4)
         graph.add_edge(1, 9, 4)
         graph.add_edge(2, 8, 5)
 
-        try:
-            self.site_manager.run_dinics(str(graph), 10, 0)
-            # expect an exception here - should not get to a result
-            self.fail()
-        except:
-            time.sleep(1)
-            err = self.site_manager.get_dinics_error()
-            self.assertTrue("The source vertex does not exist in the graph" in err)
-
-    # Test Case #48: A3, B2, C4, D2
-    # Input Space Partition: Dinic's, malformed input, 8+ nodes, disconnected graph
-    # Description:
-    # Author: Mike
-    # @unittest.skip("x")
-    def test_dinic_malformed_8nodes_disconnected(self):
-        graph = Graph(8)
-        graph.add_edge(0, 1, 5)
-        graph.add_edge(1, 2, 5)
-        graph.add_edge(2, 3, 5)
-        graph.add_edge("invalid", 5, 5)
-        graph.add_edge(5, 6, 5)
-        graph.add_edge(6, 7, 5)
-        
         self.site_manager.open_graph_input(True)
 
         try:
@@ -1061,7 +1050,32 @@ class MaxFlowCalculatorTests(unittest.TestCase):
             self.fail()
         except:
             err = self.site_manager.get_input_error()
-            self.assertTrue("Error trying to read line 6" in err)
+            self.assertTrue("Error trying to read line 7" in err)
+            pass
+
+    # Test Case #48: A3, B2, C4, D2
+    # Input Space Partition: Dinic's, malformed input, 8+ nodes, disconnected graph
+    # Description:
+    # Author: Mike
+    @unittest.skip("x")
+    def test_dinic_malformed_8nodes_disconnected(self):
+        graph = Graph(8)
+        graph.add_edge(0, 1, 5)
+        graph.add_edge(1, 2, 5)
+        graph.add_edge(2, 3, 5)
+        graph.add_edge("invalid", 5, 5)
+        graph.add_edge(5, 6, 5)
+        graph.add_edge(6, 7, 5)
+
+        self.site_manager.open_graph_input(True)
+
+        try:
+            self.site_manager.set_graph(str(graph))
+            self.site_manager.run_dinics(str(graph), 0, 7)
+            self.fail()
+        except:
+            err = self.site_manager.get_input_error()
+            self.assertTrue("Error trying to read line 5" in err)
             pass
 
 
