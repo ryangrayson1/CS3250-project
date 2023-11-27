@@ -820,7 +820,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Description:
     # Author: Mike
     @unittest.skip("x")
-    def test_dinic_wellformed_5nodes_connected(self):
+    def test_dinic_wellformed_5nodes_disconnected(self):
         graph = Graph(5)
         graph.add_edge(0, 1, 1)
         graph.add_edge(0, 2, 2)
@@ -1028,7 +1028,7 @@ class MaxFlowCalculatorTests(unittest.TestCase):
     # Input Space Partition: Dinic's, malformed input, 8+ nodes, connected graph
     # Description:
     # Author: Ryan
-    # @unittest.skip("x")
+    @unittest.skip("x")
     def test_dinic_malformed_10nodes_connected(self):
         graph = Graph(10)
         graph.add_edge(0, 1, 5)

@@ -18,7 +18,7 @@ class Graph:
         return s
 
 
-WAIT = 1
+WAIT = 0.6
 
 
 # click and wait for page load
